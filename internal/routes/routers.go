@@ -5,7 +5,10 @@ import (
 )
 
 func RegisterRoutes(app *fiber.App) {
-	r := app.Group("/api/v1")
+	// r := app.Group("/api/v1")
 
-	r.Post("/upload", func() {})
+	// r.Post("/upload", func() {
+
+	// })
+	// r.Post("/create/:action", func() {})
 }
