@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log"
+
+	"github.com/Adityadangi14/photo_app/config"
 	"github.com/Adityadangi14/photo_app/internal/server"
 	"github.com/gofiber/fiber/v3"
 )
@@ -8,8 +11,11 @@ import (
 func main() {
 
 	app := fiber.New()
-
-	s := server.NewServer(app)
+	conf, err := config.LoadConfig()
+	if err != nil {
+		log.Fatal("Failed to load config")
+	}
+	s := server.NewServer(app, &conf)
 
 	s.Run()
 
