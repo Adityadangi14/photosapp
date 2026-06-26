@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 
+	handlers "github.com/Adityadangi14/photo_app/internal/handlers/object"
 	"github.com/gofiber/fiber/v3"
 )
 
@@ -21,6 +22,10 @@ type server struct {
 }
 
 func (s *server) Run() error {
+
+	h := handlers.NewHandler()
+
+	RegisterRoutes(s.app, h)
 
 	log.Fatal(s.app.Listen(":3000"))
 
