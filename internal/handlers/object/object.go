@@ -31,7 +31,9 @@ func (h *handler) Upload(c fiber.Ctx) error {
 	}
 
 	meta := []map[string]any{}
+
 	files := form.File["files"]
+
 	file_meta := c.FormValue("files_meta")
 
 	byt, err := json.Marshal(file_meta)
