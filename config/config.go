@@ -5,14 +5,14 @@ import (
 )
 
 type Config struct {
-	BaseDir string `mapstructure:"BASE_DIR"`
+	BaseDir string `mapstructure:"BASE_DIR_LOC"`
 }
 
 func LoadConfig() (Config, error) {
 	v := viper.New()
 
 	v.SetDefault("PORT", ":3000")
-	v.SetDefault("UPLOAD_DIR", "./base_folder")
+
 	v.SetDefault("BODY_LIMIT", 50*1024*1024) // 50 MB
 
 	v.SetConfigName(".env")

@@ -9,5 +9,5 @@ func RegisterRoutes(app *fiber.App, h handlers.Handler) {
 	r := app.Group("/api/v1")
 
 	r.Post("/upload", h.Upload)
-	// r.Post("/create/:action", func() {})
+
 }
