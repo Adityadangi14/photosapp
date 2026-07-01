@@ -4,7 +4,8 @@ import (
 	"log"
 
 	"github.com/Adityadangi14/photo_app/config"
-	handlers "github.com/Adityadangi14/photo_app/internal/handlers/object"
+	handlers "github.com/Adityadangi14/photo_app/internal/handlers"
+	"github.com/Adityadangi14/photo_app/internal/helpers"
 	"github.com/gofiber/fiber/v3"
 )
 
@@ -26,7 +27,8 @@ type server struct {
 
 func (s *server) Run() error {
 
-	h := handlers.NewHandler(s.config)
+	helpers := helpers.NewHelper(s.config)
+	h := handlers.NewHandler(s.config, &helpers)
 
 	RegisterRoutes(s.app, h)
 

@@ -7,26 +7,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/Adityadangi14/photo_app/config"
 	models "github.com/Adityadangi14/photo_app/internal/model"
 	"github.com/gofiber/fiber/v3"
+	"github.com/google/uuid"
 )
 
-type Handler interface {
-	Upload(fiber.Ctx) error
-}
-
-func NewHandler(conf *config.Config) Handler {
-	return &handler{
-		config: conf,
-	}
-}
-
-type handler struct {
-	config *config.Config
-}
-
-func (h *handler) Upload(c fiber.Ctx) error {
+func (h *Handler) Upload(c fiber.Ctx) error {
 
 	form, err := c.MultipartForm()
 
@@ -50,16 +36,18 @@ func (h *handler) Upload(c fiber.Ctx) error {
 	}
 
 	if len(meta) != len(files) {
-		if err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "file meta and file numbers dosen't match"})
 
-		}
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "file meta and file numbers dosen't match"})
+
 	}
 
 	for i, file := range files {
-		path := fmt.Sprintf("%s%s/%s", h.config.BaseDir, meta[i]["filepath"], file.Filename)
+		id := uuid.NewString()
+		filename := fmt.Sprintf("%s_%s", id, file.Filename)
+		path := fmt.Sprintf("%s%s/%s", h.config.BaseDir, meta[i]["filepath"], filename)
+
 		obj := models.ObjectModel{
-			ObjectName: file.Filename,
+			ObjectName: filename,
 			Type:       meta[i]["fileType"],
 			BlurHash:   meta[i]["blurHash"],
 			CreatedAt:  time.Now().Format("2006-01-02 15:04:05"),
